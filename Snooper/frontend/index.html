@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" and dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width", initial-scale="1.0">
+    <title>The Snooper</title>
+    <link rel="icon" href="./static/logos/logo-fav.png" type="image/icon type">
+    <!-- The CSS sheet below is inherited throughout the application -->
+    <link rel="stylesheet" href="/static/css/index.css">
+    <script>
+        //Code for log in, in HTML for early stages of testing.
+        function log() {
+            var id, paswd, cpaswd;
+            id = 'ie';
+            paswd = 1234;
+          
+            if(paswd!=paswd) { 
+              alert("password don't match");
+              return false;
+            } else { 
+            window.location.href = "/dashboard";
+            }
+          }
+    </script>
+</head>
+<body>
+    <!--Navbar is created here and inherited throughout project.-->
+    <nav class="nav">
+        <a class="navbar-brand" href="#">
+            <div class="logo-image">
+                  <img src="./static/logos/logo-nb.png" class="img-fluid">
+            </div>
+        </a>
+        <a href="/dashboard" class="nav__link" data-link>Dashboard</a>
+        <a href="/profile" class="nav__link" data-link>Profile</a>
+        <a href="/" class="nav__link" data-link>Log In/Out</a>
+    </nav>
+    <div id="app"></div>
+    <script type="module" src="/static/js/index.js"></script>
+</body>
+</html>

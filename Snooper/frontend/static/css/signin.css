@@ -1,0 +1,109 @@
+body{
+    --colour-primary: #31c48d;
+    --colour-primary-dark: #18694b;
+    --colour-secondary: #adbfb8;
+    --colour-error: #c43131;
+    --colour-success: #1eaf2d;
+    --border-radius: 6px;
+
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    background: #ffffff;
+}
+
+.logo img{
+    margin-left: 20%;
+    width: 800px;
+    height: 200px;
+    overflow: hidden;
+    margin-top: 10px;
+    margin-left: 5px;
+}
+
+.container1 {
+    width: 400px;
+    max-width: 400px;
+    margin-left: 33%;
+    padding: 2rem;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+    border-radius: var(--border-radius);
+    background: var(--colour-secondary);
+}
+
+.form__hidden {
+    display: none;
+}
+
+.form__title{
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.form__message {
+    text-align:center;
+    margin-bottom: 1rem;
+}
+
+.form__message--success {
+    color: var(--colour-success)
+}
+
+.form__message--error {
+    color: var(--colour-error)
+}
+
+.form__input-group {
+    margin-bottom: 1rem;
+}
+
+.form__input {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    box-sizing: border-box;
+    border-radius: var(--border-radius);
+    border: 1px solid #dddddd;
+    outline: none;
+    background: #eeeeee;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.form__input:focus {
+    border-color: var(--color-primary);
+    background: #ffffff;
+}
+.form__input--error {
+    color: var(--colour-error);
+    border-color: var(--colour-error);
+}
+
+.form__input-error-message {
+    margin-top: 0.5rem;
+    font-size:0.85rem;
+    color:var(--colour-error);
+}
+
+.form__button {
+    width: 100%;
+    padding: 1rem 2rem;
+    font-weight: bold;
+    font-size: 1rem;
+    color:#ffffff;
+    border:none;
+    border-radius: var(--border-radius);
+    outline: none;
+    cursor: pointer;
+    background: var(--colour-primary);
+}
+
+.form__button:hover {
+    background: var(--colour-primary-dark);
+}
+
+.form__button:active {
+    transform: scale(0.98);
+}
