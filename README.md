@@ -8,3 +8,6 @@ The finished version and the main one to look at will be:
 Version 1.0
 
 With the other version showing work done and the differences between each step in the projects progression.
+
+To open webpage : cd snooper
+                  node server.js
