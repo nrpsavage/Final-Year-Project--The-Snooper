@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="icon" href="./static/logos/logo-fav.png" type="image/icon type">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <nav>
+        <li><a class="active" href="/dashboard">Home</a></li>
+        <li><a href="/profile">Profile</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/logout">Logout</a></li>
+        <div class="logo-image">
+            <img src="./static/logos/logo-nb.png" class="img-fluid">
+        </div>
+    </nav>
+    <div class="news">
+        <script type="text/javascript" src="https://feed.mikle.com/js/fw-loader.js" preloader-text="Loading" data-fw-param="161220/"></script>
+    </div>
+    <div class="main">
+        <h1>Login Successful</h1>
+        <label> Welcome to your profile</label>
+
+        <div class="search">
+            <label>Do you want to search the vulnerability database?</label>
+            <form action="/search" method="POST">
+                <input type="text" name="searchkeyword" placeholder="Enter keyword to search.">
+                <button type="submit">RUN</button>
+            </form>
+        </div>
+        <h1>CVE Search Results</h1>
+        {% if results %}
+            <h2>Search Results:</h2>
+            <h3>{{searchword}}</h3>
+            <ul>
+                {% for cve in results %}
+                    <li>{{ cve }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No results found.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
