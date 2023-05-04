@@ -38,7 +38,7 @@
                 <tr>
                     <th>CVE ID</th>
                     <th>Description</th>
-                    <th></th>
+                    <th>Analyse</th>
                 </tr>
             </thead>
             <tbody>
@@ -47,8 +47,10 @@
                         <td>{{ result.id }}</td>
                         <td>{{ result.summary }}</td>
                         <td>
-                            <form action="/analyse" method="POST">
-                                <button type="submit">Scoring</button>
+                            <form action="/score" method="POST">
+                                <input type="hidden" name="id" value="{{ result.id }}">
+                                <input type="hidden" name="summary" value="{{ result.summary }}">
+                                <button type="submit">Score</button>
                             </form>
                         </td>
                     </tr>

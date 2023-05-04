@@ -8,31 +8,31 @@
 </head>
 <body>
     <div class="scores">
-        <h1>CVE ID Score</h1>
+        <h1>{{id}}</h1>
         <p></p>
         <h2>Description</h2>
-        <p>Insert</p>
+        <p>{{summary}}</p>
+        <p></p>
+        <h3>Link: {{url}}</h3>
         <p></p>
         <table>
             <thead>
                 <tr>
-                    <th>CVSS</th>
-                    <th>CVSS</th>
+                    <th>CVSS 3</th>
+                    <th>CVSS 2</th>
                     <th>Exploited</th>
                     <th>Google</th>
                     <th>Snooper Score</th>
                 </tr>
             </thead>
             <tbody>
-                {% for result in results %}
-                    <tr>
-                        <td>{{ result.CVSS }}</td>
-                        <td>{{ result.CVSS }}</td>
-                        <td>{{ result.Exploit }}</td>
-                        <td>{{ result.Google }}</td>
-                        <td>{{ result.Snooper }}</td>
-                    </tr>
-                {% endfor %}
+                <tr>
+                    <td>{{ cvss_score }}</td>
+                    <td></td>
+                    <td></td>
+                    <td>{{google_result}}</td>
+                    <td></td>
+                </tr>
             </tbody>
         </table>
         <div class="logo-pic">

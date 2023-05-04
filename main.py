@@ -79,13 +79,6 @@ def logout ():
 
 
 
-@app.route('/score')
-def scores():
-    if session['loginsuccess'] == True:
-        return render_template('scoring.html')
-
-
-
 ## Code for the search function, makes use of an API to search for CVEs.
 @app.route('/dashboard/search', methods=['GET', 'POST'])
 def search_cve():
@@ -111,6 +104,43 @@ def search_cve():
             return render_template('dashboard.html', results=[])
     else:
         return render_template('dashboard.html')
+
+
+## Code below is what I have utilised to gather the different scoring metrics
+@app.route('/score', methods=['POST'])
+def score():
+    cve_id = request.form['id']
+    summary = request.form['summary']
+    cve_url = f"https://cve.mitre.org/cgi-bin/cvename.cgi?name={cve_id}"
+    nist_url = f"https://nvd.nist.gov/vuln/detail/{cve_id}"
+    google_url = f"https://www.google.ie/search?q={cve_id}"
+    
+    # Scrape the CVSS score from the NIST website
+    response = requests.get(nist_url)
+    if response.status_code != 200:
+        print(f"Request failed with status code {response.status_code}")
+        score = "N/A"
+    else:
+        soup = BeautifulSoup(response.text, 'html.parser')
+        cvss_elem = soup.find('span', {'data-testid': 'vuln-cvss3-panel-score'})
+        if cvss_elem is not None:
+            score = cvss_elem.text.strip()
+        else:
+            score = "N/A"
+    
+    response = requests.get(google_url)
+    if response.status_code != 200:
+        print(f"Request failed with status code {response.status_code}")
+        score = "N/A"
+    else:
+        soup = BeautifulSoup(response.text, 'html.parser')
+        search_result = soup.find('div', {'id':'result-stats'})
+        if search_result is not None:
+            google = search_result.text.strip()
+        else:
+            google = "N/A"
+    
+    return render_template('scoring.html', id=cve_id, summary=summary, cvss_score=score, url=cve_url, google_result=google)
 
 
 if __name__ == '__main__':
