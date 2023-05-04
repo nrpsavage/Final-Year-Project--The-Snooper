@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scoring</title>
+    <link rel="icon" href="./static/logos/logo-fav.png" type="image/icon type">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="scores">
+        <h1>CVE ID Score</h1>
+        <p></p>
+        <h2>Description</h2>
+        <p>Insert</p>
+        <p></p>
+        <table>
+            <thead>
+                <tr>
+                    <th>CVSS</th>
+                    <th>CVSS</th>
+                    <th>Exploited</th>
+                    <th>Google</th>
+                    <th>Snooper Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                    <tr>
+                        <td>{{ result.CVSS }}</td>
+                        <td>{{ result.CVSS }}</td>
+                        <td>{{ result.Exploit }}</td>
+                        <td>{{ result.Google }}</td>
+                        <td>{{ result.Snooper }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="logo-pic">
+            <img src="./static/logos/logo-nb.png" class="img-fluid">
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="icon" href="./static/logos/logo-fav.png" type="image/icon type">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <nav>
+        <li><a class="active" href="/dashboard">Home</a></li>
+        <li><a href="/profile">Profile</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/logout">Logout</a></li>
+        <div class="logo-image">
+            <img src="./static/logos/logo-nb.png" class="img-fluid">
+        </div>
+    </nav>
+    <div class="news">
+        <script type="text/javascript" src="https://feed.mikle.com/js/fw-loader.js" preloader-text="Loading" data-fw-param="161220/"></script>
+    </div>
+    <div class="main">
+        <h1>Welcome to the Snooper dashboard.</h1>
+        <form action="/score">
+            <button type="submit">Scoring</button>
+        </form>
+        <div class="search">
+            <label>Do you want to search the vulnerability database?</label>
+            <p></p>
+            <form action="/dashboard/search" method="POST">
+                <input type="text" name="searchkeyword" placeholder="Enter keyword to search.">
+                <button type="submit">RUN</button>
+            </form>
+        </div>
+        <p></p>
+        <table>
+            <thead>
+                <tr>
+                    <th>CVE ID</th>
+                    <th>Description</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                    <tr>
+                        <td>{{ result.id }}</td>
+                        <td>{{ result.summary }}</td>
+                        <td>
+                            <form action="/analyse" method="POST">
+                                <button type="submit">Scoring</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+    </div>
+</body>
+</html>
