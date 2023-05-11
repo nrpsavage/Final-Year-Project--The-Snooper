@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link rel="icon" href="./static/logos/logo-fav.png" type="image/icon type">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <nav>
+        <li><a href="/dashboard">Home</a></li>
+        <li><a class="active" href="/profile">Profile</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/logout">Logout</a></li>
+        <div class="logo-image">
+            <img src="./static/logos/logo-nb.png" class="img-fluid">
+        </div>
+    </nav>
+    <div class="news">
+        <script type="text/javascript" src="https://feed.mikle.com/js/fw-loader.js" preloader-text="Loading" data-fw-param="161220/"></script>
+    </div>
+    <div class="profile">
+        <h1>Profile:</h1>
+        <table class="tableS">
+            <tr>
+                <th>Name: </th>
+                <td>{{ name }}</td>
+            </tr>
+            <tr>
+                <th>Email: </th>
+                <td>{{ email }}</td>
+            </tr>
+            <tr>
+                <th>Company: </th>
+                <td>{{ company }}</td>
+            </tr>
+            <tr>
+                <th>Date Joined: </th>
+                <td>{{ date }}</td>
+            </tr>
+            <tr>
+                <th>Reports: </th>
+                <td>N/A</td>
+            </tr> 
+        </table>
+        <table class="tableP">
+            <thead>
+                <tr>
+                    <th>Applications Used: 
+                        <form method='POST'>
+                            <input type="text" name="app_name" id="input" placeholder="Please enter applications you use.">
+                            <input type="submit" id="button" value="Submit">
+                        </form>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in user2 %}
+                <tr>
+                    <td>{{ row.app_name }}</td>
+                </tr> 
+                {% endfor %}
+            </tbody>
+        </table>
+        <p></p>
+        <form action="/edit">
+            <input type="submit" value="Edit Profile" id="button" >
+        </form>
+    </div>
+</body>
+</html>

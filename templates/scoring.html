@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scoring</title>
+    <link rel="icon" href="./static/logos/logo-fav.png" type="image/icon type">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <script>
+        function generatePDF() {
+            var element = document.getElementById('scores');
+            var now = new Date().toLocaleString().replace(',', '').replace(/:.. /, ' ');
+            var filename = 'result ' + now + '.pdf';
+            var opt = {
+                margin:       0,
+                filename:     filename,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+</head>
+<body>
+    <div id="form-print" enctype="text/plain">
+        <button onclick="generatePDF()" id="button">Generate PDF</button>
+        <div class="scores" id="scores">
+            <h1>{{id}}</h1>
+            <p></p>
+            <h2>Description</h2>
+            <p>{{summary}}</p>
+            <p></p>
+            <h3>Link: <a href="{{url}}">CVE LINK</a></h3>
+            <p></p>
+            <h3>Keywords: {{match}}</h3>
+            <p></p>
+            <table class="tableP">
+                <thead>
+                    <tr>
+                        <th>CVSS 3</th>
+                        <th>CVSS 2</th>
+                        <th>Exploited</th>
+                        <th>Google</th>
+                        <th>Snooper Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ cvss3_score }}</td>
+                        <td>{{ cvss2_score }}</td>
+                        <td>{{ exploit }}</td>
+                        <td>{{ google }}</td>
+                        <td>{{ snooper_score }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Result: {{ res }}</p>
+            <div class="logo-pic">
+                <img src="./static/logos/logo-nb.png" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

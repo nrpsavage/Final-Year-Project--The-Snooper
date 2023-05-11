@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About</title>
+    <link rel="icon" href="./static/logos/logo-fav.png" type="image/icon type">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <nav>
+        <li><a href="/dashboard">Home</a></li>
+        <li><a href="/profile">Profile</a></li>
+        <li><a class="active" href="/about">About</a></li>
+        <li><a href="/logout">Logout</a></li>
+        <div class="logo-image">
+            <img src="./static/logos/logo-nb.png" class="img-fluid">
+        </div>
+    </nav>
+    <div class="news">
+        <script type="text/javascript" src="https://feed.mikle.com/js/fw-loader.js" preloader-text="Loading" data-fw-param="161220/"></script>
+    </div>
+    <div class="profile">
+        <h1>About Project</h1>
+        <p>This product uses the MitreCVE API but is not endorsed or certified by Mitre.</p>
+        <p>This web application is made with small/medium size businesses in mind. It is made to help organisation to discover vulnerabilities that may affect their systems.</p>
+        <p>This is done by searching for CVE's on the CVE Mitre website and collecting the data related to them there. Then when you found a CVE you want more information on,</p>
+        <p>you press the 'score' button beside it to get more details. Here you can see the scoring metrics such as CVSS 3 and 2 scores if they have been designated scores.</p>
+        <p>Here you can also see two more metrics are in use, 'Exploited' and 'Google Search', these were chosen for similar reasons. If a CVE is being exploited it means it</p>
+        <p>is going to be more dangerous to an organisation compared to one that is not being exploited. For the Google Search, this metric is taken due to the public interest</p>
+        <p>that some CVE's gain, the more people discussing it and posting articles or mention it is news sites means there is something to talk about meaning it could be </p>
+        <p>dangerous to an organisation. All in all these metrics combine into what I call the Snooper Score. It is a scoring system that I have created, it places more emphasis</p>
+        <p>on the CVE's being exploited and the CVSS 3 score, while Google searches and CVSS 2 are additional scores that give more information to the user.</p>
+        <p> </p>
+        <h3>How the scoring works:</h3>
+        <p>CVSS 3: 'Low' = 2 'Medium' = 4 'High' = 6 'Critical' = 8</p>
+        <p>CVSS 2: 'Low' = 1 'Medium' = 2 'High' = 3</p>
+        <p>Exploited: 'Being Exploited' = 5  'Not Exploited' = 0</p>
+        <p>Google Search: '1-999' = 1  '1000-9999' = 2  '10000-99999' = 3  '100000+' = 4</p>
+        <p>They are then added together to give a snooper score.</p>
+    </div>
+</body>
+</html>
