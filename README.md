@@ -13,4 +13,5 @@ V.1.0 DONE
 With the other version showing work done and the differences between each step in the projects progression.
 
 To run code: Run code on the main.py code and from there open http://127.0.0.1:5000 to see the page.
-The MySQL Query will be put into a txt file in the finished branch.
+
+The MySQL Query will be put into a file called 'SnooperDB' in the finished branch.
