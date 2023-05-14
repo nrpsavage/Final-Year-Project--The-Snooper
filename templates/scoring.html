@@ -24,7 +24,6 @@
 </head>
 <body>
     <div id="form-print" enctype="text/plain">
-        <button onclick="generatePDF()" id="button">Generate PDF</button>
         <div class="scores" id="scores">
             <h1>{{id}}</h1>
             <p></p>
@@ -59,6 +58,9 @@
             <div class="logo-pic">
                 <img src="./static/logos/logo-nb.png" class="img-fluid">
             </div>
+        </div>
+        <div id="pdfbut">
+            <button onclick="generatePDF()" id="button">Generate PDF</button>
         </div>
     </div>
 </body>

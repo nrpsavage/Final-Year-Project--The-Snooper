@@ -191,3 +191,8 @@ table {
     color: #414141;
     background-color: white;
 }
+
+#pdfbut{
+    padding-top: 50px;
+    padding-left: 40%;
+}

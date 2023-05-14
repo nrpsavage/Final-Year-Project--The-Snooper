@@ -59,8 +59,10 @@ def index():
                     user_id = user['my_id']
                     encrypted_id = fernet.encrypt(str(user_id).encode()).decode()
                     session['user_id'] = encrypted_id
+                    print(f"Log in successful")
                     return redirect (url_for('dash'))
             else:
+                print(f"Log in unsuccessful")
                 return redirect (url_for('index'))
 
     return render_template("login.html")
@@ -77,6 +79,7 @@ def new_user():
         cursor = db.connection.cursor (MySQLdb.cursors.DictCursor)
         cursor.execute("INSERT INTO snooper.users (email, password, name, date_created) VALUES (%s, %s, %s,NOW())", (email, encrypted_password, name))
         db.connection.commit()
+        print(f"User Account Registered")
         return redirect (url_for('index'))
     return render_template("register.html")
 
@@ -106,7 +109,7 @@ def profile():
         cursor = db.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute("INSERT INTO apps (user_id, app_name) VALUES (%s, %s)", (id, app_name))
         db.connection.commit()
-        ##
+        print(f"Applications successfully sent to database.")
 
     return render_template('profile.html', name=name, email=email, date=date, company=company, user2=user2)
 
@@ -120,6 +123,7 @@ def change():
         cursor = db.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute(f"UPDATE users SET email=%s, name=%s, company_name=%s", (email, name, company))
         db.connection.commit()
+        print(f"User acccount inforamtion has been updated.")
         return render_template('dashboard.html')
     return render_template('edit.html')
 
@@ -132,22 +136,27 @@ def search_cve():
         searchword = request.form['searchkeyword']
         url = f"https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword={searchword}+2023"
         response = requests.get(url)
-        if response.status_code != 200:
-            print(f"Request failed with status code {response.status_code}")
-            return render_template('dashboard.html', results=[])
-        try:
-            results = []
-            soup = BeautifulSoup(response.text, 'html.parser')
-            cve_table = soup.find_all('table')[2]
-            for row in cve_table.find_all('tr')[1:]:
-                cols = row.find_all('td')
-                cve_id = cols[0].find('a').text
-                description = cols[1].text.strip()
-                results.append({'id': cve_id, 'summary': description})
-            return render_template('dashboard.html', results=results)
-        except ValueError as e:
-            print(f"Failed to decode response as JSON: {response.content}")
-            return render_template('dashboard.html', results=[])
+        if searchword == (""):
+            print(f"No keyword entered, can't search.")
+            return render_template('dashboard.html')
+        else:
+            if response.status_code != 200:
+                print(f"Request failed with status code {response.status_code}")
+                return render_template('dashboard.html', results=[])
+            try:
+                results = []
+                soup = BeautifulSoup(response.text, 'html.parser')
+                cve_table = soup.find_all('table')[2]
+                for row in cve_table.find_all('tr')[1:]:
+                    cols = row.find_all('td')
+                    cve_id = cols[0].find('a').text
+                    description = cols[1].text.strip()
+                    results.append({'id': cve_id, 'summary': description})
+                    print(f"CVE search complete.")
+                return render_template('dashboard.html', results=results)
+            except ValueError as e:
+                print(f"Failed to decode response as JSON: {response.content}")
+                return render_template('dashboard.html', results=[])
     else:
         return render_template('dashboard.html')
     
@@ -160,10 +169,11 @@ def quick_search():
         user_id = int(fernet.decrypt(encrypted_id.encode()).decode())
         cursor = db.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute(f"SELECT * FROM apps WHERE user_id={user_id}")        
-        quicksearch = cursor.fetchone()
+        quicksearch = cursor.fetchall()
         url = f"https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword={quicksearch}+2023"
         response = requests.get(url)
-        if quicksearch == ():
+        if quicksearch == (""):
+            print(f"Quick search incomplete, no data found in table.")
             return render_template('dashboard.html')
         try:
             results = []
@@ -174,6 +184,7 @@ def quick_search():
                 cve_id = cols[0].find('a').text
                 description = cols[1].text.strip()
                 results.append({'id': cve_id, 'summary': description})
+                print(f"Quick search complete.")
             return render_template('dashboard.html', results=results)
         except ValueError as e:
             print(f"Failed to decode response as JSON: {response.content}")
@@ -211,6 +222,7 @@ def score():
         cvss3_elem = soup.find('span', {'class': 'severityDetail'})
         if cvss3_elem is not None:
             score3 = cvss3_elem.text.strip()
+            print(f"CVSS3 score found.")
         else:
             score3 = "N/A"
 
@@ -226,6 +238,7 @@ def score():
         cvss2_elem = soup.find(id="Cvss2CalculatorAnchorNA")
         if cvss2_elem is not None:
             score2 = cvss2_elem.text.strip()
+            print(f"CVSS2 score found.")
         else:
             score2 = "N/A"
 
@@ -241,8 +254,10 @@ def score():
         exploit_result = soup.find(id="vulnCisaExploit")
         if exploit_result is not None:
             exploit = "Being Exploited"
+            print(f"CVE exploit is found.")
         else:
             exploit = "Not Exploited"   
+            print(f"CVE not beinging exploited.")
 
 
 
@@ -259,6 +274,7 @@ def score():
             search_stats_str = result["search_information"]["total_results"]
             search_stats_int = int( search_stats_str)
             google = f"{search_stats_int}"
+            print(f"Google search results found.")
         else:
             google = "N/A"
     except Exception as e:
@@ -696,13 +712,13 @@ def score():
     snooper_score = exp + cvss3 + cvss2 + goog
 
     if snooper_score < 5:
-        rep="Score is less than 5, this CVE wouldn't be a major issue, whoever if being exploited: action is recomended."
+        rep="Score is less than 5, this CVE wouldn't be a major issue, whoever if being exploited: action is recomended. To learn more about the scoring system please refer to the about page."
     elif snooper_score >= 5 and snooper_score <= 10:
-        rep="Score is below 10, use caution when dealing with this CVE as it could pose a problem in the future."
+        rep="Score is below 10, use caution when dealing with this CVE as it could pose a problem in the future. To learn more about the scoring system please refer to the about page."
     elif snooper_score >= 11 and snooper_score <= 15:
-        rep="Score is between 10 and 15, the CVE needs to be addressed and fixed for the system in question."
+        rep="Score is between 10 and 15, the CVE needs to be addressed and fixed for the system in question. To learn more about the scoring system please refer to the about page."
     elif snooper_score >= 16:
-        rep="Score is over 15, drop everything you are doing and make sure this CVE is fixed if it applies to your systems."
+        rep="Score is over 15, drop everything you are doing and make sure this CVE is fixed if it applies to your systems. To learn more about the scoring system please refer to the about page."
 
     return render_template('scoring.html', id=cve_id, summary=summary, cvss3_score=score3,match=key_match, cvss2_score=score2, url=cve_url, google=google, exploit=exploit, snooper_score=snooper_score, res=rep)
 
